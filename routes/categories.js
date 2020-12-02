@@ -1,0 +1,57 @@
+const router = require('express').Router();
+const {Category} = require("../modules/category");
+
+
+// localhost/Category/4 
+
+
+router.post('/',async (req,res)=>{  //req:request object,res:response object
+
+    //object destructuring to get the attribute from the body object 
+    const {name,imgUrl} = req.body;
+
+    //creating an instance of the Category model
+    const category = new Category({name,imgUrl});
+    
+    try{
+        //trying to save the category in the database
+        const results =await category.save();
+        //sending back the results to the frontend 
+        res.send(results);
+    }catch(ex){
+        res.send(ex);
+    }
+  
+    
+})
+
+router.get('/',async (req,res)=>{
+    try{
+        //find all categries in the database
+        const results  = await Category.find({});
+        res.send(results);
+    }catch(ex){
+        res.send(ex);
+    }
+    
+})
+
+// router.delete('/:id',async (req,res)=>{
+//   const {id} = req.params;
+
+//     try{
+//         const results  = await Category.deleteOne({_id:id});
+//         res.send(results);
+//     }catch(ex){
+//         res.send(ex);
+//     }
+
+// })
+
+
+
+
+
+
+module.exports = router;
+
