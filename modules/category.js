@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
 // creating a category shema which will defines the shape of the documents within that collection.
 const categoryShema = new mongoose.Schema({
 name:{

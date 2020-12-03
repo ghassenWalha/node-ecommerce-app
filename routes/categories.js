@@ -21,8 +21,6 @@ router.post('/',async (req,res)=>{  //req:request object,res:response object
     }catch(ex){
         res.send(ex);
     }
-  
-    
 })
 
 router.get('/',async (req,res)=>{
@@ -47,10 +45,6 @@ router.get('/',async (req,res)=>{
 //     }
 
 // })
-
-
-
-
 
 
 module.exports = router;
