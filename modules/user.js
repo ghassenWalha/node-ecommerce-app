@@ -21,11 +21,11 @@ const userSchema = new mongoose.Schema({
         required:true,
     },
     bag:{
-        type:Array(),
+        type:[String],
 
     },
     favorite:{
-        type:Array(),
+        type:[String],
     }
 
 })
