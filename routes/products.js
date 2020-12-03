@@ -1,12 +1,15 @@
 const router = require('express').Router();
 const {Product} = require('../modules/product');
 
-router.get('/', async (req,res)=>{
+router.get('/:category', async (req,res)=>{
     const {category} = req.params ;
     try{
-        const results  = await Product.find();
+        const results  = await Product.find({"category":category});
+        console.log(results) ;
         res.send(results); 
+        
     }catch(ex){
+
         res.send(ex);
     }
 }) 
