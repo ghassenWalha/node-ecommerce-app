@@ -7,8 +7,6 @@ const app = express();
 // middleware to parse json to javascript objects
 app.use(express.json());
 
-
-
 // connecting to mongodb
 mongoose.connect('mongodb://localhost/flutter_ecommerce_project',{ useNewUrlParser: true , useUnifiedTopology: true})
 .then(()=>console.log("connected to mongodb successfully"))

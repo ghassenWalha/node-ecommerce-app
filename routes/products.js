@@ -17,7 +17,7 @@ router.post('/',async (req,res)=> {
 
       const product = new Product({name,description,moreInfo,price,category,imgUrls}) ;
       try{
-            const results = await Product.save()  ; 
+            const results = await product.save()  ; 
             res.send(results) ; 
 
       }catch(e) {res.send(e) ; }

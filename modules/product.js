@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const productSchema = new mongoose.Schema({
 
     name: {
@@ -29,7 +28,7 @@ const productSchema = new mongoose.Schema({
     }
     ,
     category: {
-        type: String,
+        type: [String],
         required: true,
         minlength: 2,
         maxlength: 25

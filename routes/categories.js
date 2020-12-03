@@ -4,21 +4,21 @@ const {Category} = require("../modules/category");
 
 // localhost/Category/4 
 
-
-router.post('/',async (req,res)=>{  //req:request object,res:response object
-
+router.post('/',async (req,res)=>{  
+    
+    //req:request object,res:response object
+    
     //object destructuring to get the attribute from the body object 
+    
     const {name,imgUrl} = req.body;
 
     //creating an instance of the Category model
     const category = new Category({name,imgUrl});
-    
     try{
         //trying to save the category in the database
         const results =await category.save();
         //sending back the results to the frontend 
-        res.send(results);
-    }catch(ex){
+        res.send(results); }catch(ex){
         res.send(ex);
     }
 })
@@ -29,8 +29,7 @@ router.get('/',async (req,res)=>{
         const results  = await Category.find({});
         res.send(results);
     }catch(ex){
-        res.send(ex);
-    }
+        res.send(ex);}
     
 })
 
