@@ -2,12 +2,14 @@ const router = require('express').Router();
 const {User} = require('../modules/user');
 const { route } = require('./products');
 const bcrypt=require("bcrypt");
+const auth = require("../middleware/auth"); 
+const admin =require ("../middleware/admin")
 
 router.post('/', async (req,res) => {
-    const {name,email,bag,favorite} = req.body;
+    const {name,email,bag,favorite,isAdmin} = req.body;
     try {
        const hashedPassword = await bcrypt.hash(req.body.password,10); 
-       const user = new User({name,hashedPassword,email,bag,favorite});
+       const user = new User({name,hashedPassword,email,bag,favorite,isAdmin});
         // Saving the user in the database
         const results = await user.save();
         token= user.generateToken() ;
@@ -19,7 +21,7 @@ router.post('/', async (req,res) => {
     }
 })
 
-router.get('/', async (req,res) => {
+router.get('/',[auth,admin], async (req,res) => {
     try {
         // Find all Users in the database
         const results = await User.find({});

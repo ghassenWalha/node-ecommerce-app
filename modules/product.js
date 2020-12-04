@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
 
+// creating a category shema that defines the shape of the documents within that product.
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -39,6 +40,8 @@ const productSchema = new mongoose.Schema({
     }
 
 })
+
+// creating a product model from the schema : the model handles all interaction with the database
 
 const Product= mongoose.model('Product',productSchema) ;
 

@@ -26,12 +26,15 @@ const userSchema = new mongoose.Schema({
     },
     favorite: {
         type: [String],
+    },
+    isAdmin:{
+        type:Boolean
     }
 });
 
 
 userSchema.methods.generateToken = function () {
-    return jwt.sign({ _id: this._id, name: this.name, hashedPassword: this.hashedPassword, email: this.email }, "jwtPrivateKey");
+    return jwt.sign({ _id: this._id, name: this.name, email: this.email,isAdmin:this.isAdmin }, "jwtPrivateKey");
 
 }
 // Creating a model from a Schema 
