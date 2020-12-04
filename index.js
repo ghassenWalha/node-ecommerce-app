@@ -4,6 +4,7 @@ const categories = require('./routes/categories');
 const products = require('./routes/products') ;
 const users = require('./routes/users'); 
 const auth = require('./routes/authentification') ; 
+const bag = require('./routes/bag'); 
 const app = express();
 
 // middleware to parse json to javascript objects
@@ -17,14 +18,10 @@ mongoose.connect('mongodb://localhost/flutter_ecommerce_project',{ useNewUrlPars
 //delegating a router to a given url
 // all request to /api/categories will be handled by the categories router
 app.use("/api/categories",categories);
-
 app.use("/api/products",products) ; 
-
 app.use("/api/users",users);
-
 app.use("/api/auth",auth) ; 
-
-
+app.use("/api/bag",bag);
 
 //choose the backend port 
 const port = 3002;
