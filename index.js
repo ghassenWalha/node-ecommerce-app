@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const categories = require('./routes/categories');
 const products = require('./routes/products') ;
 const users = require('./routes/users'); 
+const auth = require('./routes/authentification') ; 
 const app = express();
 
 // middleware to parse json to javascript objects
@@ -19,7 +20,11 @@ app.use("/api/categories",categories);
 
 app.use("/api/products",products) ; 
 
-app .use("/api/users",users);
+app.use("/api/users",users);
+
+app.use("/api/auth",auth) ; 
+
+
 
 //choose the backend port 
 const port = 3002;
