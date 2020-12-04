@@ -1,44 +1,66 @@
 const router = require('express').Router();
-const {User} = require('../modules/user');
-const {Product} = require('../modules/product');
+const { User } = require('../modules/user');
+const { Product } = require('../modules/product');
 
 
 
-router.get('/:bag',async (req,res)=>{
-    const {bag} = req.params ;
-    try{
-        var resultArray=await Product.find({_id:{$in:bag}});
-         res.send(resultArray);
+router.get('/', async (req, res) => {
+    const email = "amal@gmail.com";
+    /*const {bag} = req.params ;*/
+    try {
+        console.log("hello");
+        var user = await User.find({ "email": email });
+        var bag = user.bag;
+
+        var resultArray = await Product.findOne({ _id: { $in: bag } });
+        res.send(resultArray);
+
     }
-    catch(ex){
+
+    catch (ex) {
         res.send(ex);
     }
-    }
-    )
-router.post('/',async (req,res)=>{
-     const {id,bag} = req.body;
-         try{
-            var resultArray=await User.update({
+}
+)
+router.post('/', async (req, res) => {
+    const email = "amal@gmail.com";
+    const { id, bag } = req.body;
+    /*const {bag} = req.params ;*/
+    try {
+        console.log("hello1");
+        var user = await User.find({ "email": email });
+
+      
+            var result = await user.update({
                 email
             }, { $push: { bag: id } });
-            res.send(resultArray);
-         }
-         catch(ex){
-             res.send(ex);
-         }
-         });
-router.put('/:id/:bag',async (req,res)=>{
-            const {id,bag} = req.params;
-            try{
-                User.update({
-                    email
-                }, { $pull: { bag: id } });
-                }
-             
-             catch(ex){
-                 res.send(ex);
-             }
-             })
+            res.send(result);
+        
 
+        
+    }
+    catch (ex) {
+        res.send(ex);
+    }
+});
+router.put('/:id', async (req, res) => {
+    const email = "amal@gmail.com";
+    try {
+        var user = await User.find({ "email": email });
+        const { id } = req.params;
+        try {
+            user.update({
+                email
+            }, { $pull: { bag: id } });
+        }
 
-  
+        catch (ex) {
+            res.send(ex);
+        }
+    }
+    catch (ex) {
+        res.send(ex);
+    }
+})
+
+module.exports = router;
