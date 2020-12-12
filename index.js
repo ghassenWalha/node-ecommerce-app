@@ -11,10 +11,10 @@ const app = express();
 app.use(express.json());
 
 // connecting to mongodb
-mongoose.connect('mongodb://localhost/flutter_ecommerce_project',{ useNewUrlParser: true , useUnifiedTopology: true})
+// connecting to mongodb
+mongoose.connect('mongodb+srv://flutter-team:flutter-junior@cluster0.o7rlv.mongodb.net/flutter_ecoomerce_project',{ useNewUrlParser: true , useUnifiedTopology: true})
 .then(()=>console.log("connected to mongodb successfully"))
 .catch((err)=> console.log('couldnt connect to mongodb'+ err));
-
 //delegating a router to a given url
 // all request to /api/categories will be handled by the categories router
 app.use("/api/categories",categories);

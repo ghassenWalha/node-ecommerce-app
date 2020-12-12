@@ -21,7 +21,7 @@ router.post('/', async (req,res) => {
     }
 })
 
-router.get('/',[auth,admin], async (req,res) => {
+router.get('/'/*,[auth,admin],*/ ,async (req,res) => {
     try {
         // Find all Users in the database
         const results = await User.find({});

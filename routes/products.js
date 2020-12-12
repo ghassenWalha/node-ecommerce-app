@@ -13,6 +13,14 @@ router.get('/:category', async (req, res) => {
         res.send(results);
     } catch (ex) { res.send(ex); }
 })
+router.get('/', async (req, res) => {
+ 
+    try {
+        console.log("hello");
+        const results = await Product.find({  });
+        res.send(results);
+    } catch (ex) { res.send(ex); }
+})
 
 //  finding a single product by id 
 router.get('/findone/:id', async (req, res) => {
@@ -29,7 +37,7 @@ router.get('/findone/:id', async (req, res) => {
 })
 
 // creating a new product
-router.post('/',[auth,admin] ,async (req, res) => {
+router.post('/',/*[auth,admin] ,*/async (req, res) => {
     const { name, description, moreInfo, price, category, imgUrls, } = req.body;
     const product = new Product({ name, description, moreInfo, price, category, imgUrls });
     try {
@@ -40,13 +48,13 @@ router.post('/',[auth,admin] ,async (req, res) => {
 
 })
 // deleting a product by an id 
-router.delete('/:id',[auth,admin], async (req, res) => {
+router.delete('/:id',/*[auth,admin],*/ async (req, res) => {
     const product = await Product.findByIdAndDelete(req.params.id).exec();
     res.send("success") ;
 })
 
 //  updating a product 
-router.put('/',[auth,admin] , async (req, res) => {
+router.put('/',/*[auth,admin] ,*/ async (req, res) => {
     const { name, description, moreInfo, price, category, imgUrls } = req.body ;
       const id =req.body._id ; 
     try {

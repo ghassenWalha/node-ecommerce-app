@@ -4,7 +4,7 @@ const auth = require("../middleware/auth") ;
 const admin = require('../middleware/admin') ; 
 // localhost/Category/4 
 
-router.post('/',[auth,admin],async (req,res)=>{  
+router.post('/',/*[auth,admin],*/async (req,res)=>{  
     
     //req:request object,res:response object
     
@@ -23,7 +23,7 @@ router.post('/',[auth,admin],async (req,res)=>{
     }
 })
 
-router.get('/',auth,async (req,res)=>{
+router.get('/'/*,auth*/,async (req,res)=>{
     try{
         //find all categries in the database
         const results  = await Category.find({});
