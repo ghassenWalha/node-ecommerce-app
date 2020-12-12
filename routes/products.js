@@ -5,6 +5,15 @@ const auth = require('../middleware/auth') ;
 const admin = require('../middleware/admin') ; 
 
 
+router.get('/', async (req, res) => {
+ 
+    try {
+        const results = await Product.find({  });
+        res.send(results);
+    } catch (ex) { res.send(ex); }
+})
+
+
 // finding the liste ofproducts by categorie 
 router.get('/:category', async (req, res) => {
     const { category } = req.params;
@@ -29,7 +38,7 @@ router.get('/findone/:id', async (req, res) => {
 })
 
 // creating a new product
-router.post('/',[auth,admin] ,async (req, res) => {
+router.post('/',[admin] ,async (req, res) => {
     const { name, description, moreInfo, price, category, imgUrls, } = req.body;
     const product = new Product({ name, description, moreInfo, price, category, imgUrls });
     try {
@@ -40,7 +49,8 @@ router.post('/',[auth,admin] ,async (req, res) => {
 
 })
 // deleting a product by an id 
-router.delete('/:id',[auth,admin], async (req, res) => {
+router.delete('/:id', async (req, res) => {
+    console.log("delete");
     const product = await Product.findByIdAndDelete(req.params.id).exec();
     res.send("success") ;
 })

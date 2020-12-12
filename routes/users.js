@@ -6,7 +6,9 @@ const auth = require("../middleware/auth");
 const admin =require ("../middleware/admin")
 
 router.post('/', async (req,res) => {
+    console.log("here");  
     const {name,email,bag,favorite,isAdmin} = req.body;
+    console.log(req);
     try {
        const hashedPassword = await bcrypt.hash(req.body.password,10); 
        const user = new User({name,hashedPassword,email,bag,favorite,isAdmin});
