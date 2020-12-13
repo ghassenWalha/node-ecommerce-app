@@ -5,6 +5,15 @@ const auth = require('../middleware/auth') ;
 const admin = require('../middleware/admin') ; 
 
 
+router.get('/', async (req, res) => {
+ 
+    try {
+        const results = await Product.find({});
+        res.send(results);
+    } catch (ex) { res.send(ex); }
+})
+
+
 // finding the liste ofproducts by categorie 
 router.get('/:category', async (req, res) => {
     const { category } = req.params;
