@@ -24,7 +24,7 @@ app.use("/api/auth",auth) ;
 app.use("/api/bag",bag);
 
 //choose the backend port 
-const port = 3002;
+  const port = process.env.PORT || 3001;
 
 //starting the backend server
 app.listen(port,()=>console.log("listening on port:"+ port ));
