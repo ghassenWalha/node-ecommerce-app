@@ -1,36 +1,38 @@
 const router = require('express').Router();
 const {Category} = require("../modules/category");
-const auth = require("../middleware/auth") ; 
-const admin = require('../middleware/admin') ; 
+const auth = require("../middleware/auth");
+const admin = require('../middleware/admin');
 // localhost/Category/4 
 
-router.post('/',[auth,admin],async (req,res)=>{  
-    
+router.post('/', [auth, admin], async (req, res) => {
+
     //req:request object,res:response object
-    
+
     //object destructuring to get the attribute from the body object 
-    
-    const {name,imgUrl} = req.body;
+
+    const {name, imgUrl} = req.body;
 
     //creating an instance of the Category model
-    const category = new Category({name,imgUrl});
-    try{
+    const category = new Category({name, imgUrl});
+    try {
         //trying to save the category in the database
-        const results =await category.save();
+        const results = await category.save();
         //sending back the results to the frontend 
-        res.send(results); }catch(ex){
+        res.send(results);
+    } catch (ex) {
         res.send(ex);
     }
 })
 
-router.get('/',auth,async (req,res)=>{
-    try{
+router.get('/', auth, async (req, res) => {
+    try {
         //find all categries in the database
-        const results  = await Category.find({});
+        const results = await Category.find({});
         res.send(results);
-    }catch(ex){
-        res.send(ex);}
-    
+    } catch (ex) {
+        res.send(ex);
+    }
+
 })
 
 // router.delete('/:id',async (req,res)=>{

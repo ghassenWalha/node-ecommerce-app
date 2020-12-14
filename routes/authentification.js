@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { User } = require("../modules/user") ; 
-const jwt = require("jsonwebtoken") ; 
-const bcrypt = require("bcrypt") ; 
+const {User} = require("../modules/user");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 
 //  authenticating the user  by searching a user in the data base with the same email and then verifying
@@ -9,11 +9,14 @@ const bcrypt = require("bcrypt") ;
 
 router.post('/', async (req, res) => {
     try {
-        let user = await User.findOne({ email: req.body.email });
-        if (!user)   res.status(404).send('invalid mail or password') ; 
+        let user = await User.findOne({email: req.body.email});
+        if (!user) {
+            res.status(404).send('invalid mail or password');
+            return null;
+        }
         if (await bcrypt.compare(req.body.password, user.hashedPassword)) {
-            token= user.generateToken() ;
-            res.header("x-auth-token",token).send(user);
+            token = user.generateToken();
+            res.header("x-auth-token", token).send(user);
         } else {
             res.status(400).send("invalid password");
         }

@@ -1,5 +1,5 @@
-const { JsonWebTokenError } = require('jsonwebtoken');
-const config=require('config') ; 
+const {JsonWebTokenError} = require('jsonwebtoken');
+const config = require('config');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
@@ -27,14 +27,14 @@ const userSchema = new mongoose.Schema({
     favorite: {
         type: [String],
     },
-    isAdmin:{
-        type:Boolean
+    isAdmin: {
+        type: Boolean
     }
 });
 
 
 userSchema.methods.generateToken = function () {
-    return jwt.sign({ _id: this._id, name: this.name, email: this.email,isAdmin:this.isAdmin }, "jwtPrivateKey");
+    return jwt.sign({_id: this._id, name: this.name, email: this.email, isAdmin: this.isAdmin}, "jwtPrivateKey");
 
 }
 // Creating a model from a Schema 
