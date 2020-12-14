@@ -5,7 +5,7 @@ const auth = require('../middleware/auth') ;
 const admin = require('../middleware/admin') ; 
 
 
-// finding the liste ofproducts by categorie 
+// finding the liste of products by category
 router.get('/:category', async (req, res) => {
     const { category } = req.params;
     try {
@@ -56,5 +56,36 @@ router.put('/',[auth,admin] , async (req, res) => {
            res.send(p) ; 
 
     } catch (ex) { res.send(ex); }
+})
+// search functionality
+router.get('/', async (req, res) => {
+    const {search} = req.query;
+    if (search){
+        const products = await Product.find({ name: { $regex: search ,$options: 'i'}});
+        res.send(products);
+    }
+})
+// Sorting products by category
+router.get('/', async (req, res) => {
+    const {category,price, date } = req.query;
+    if (category)
+    { if ((!date) && price){
+        const results = await Product.find( {category: category}).sort({price: price});
+        res.send(results);
+    }
+    else if ( (date) && (!price)){
+        const results = await Product.find( {category: category}).sort({createdAt: date});
+        res.send(results);
+    }}
+    else{
+         if((!date) && (price)){
+        const results = await Product.find().sort({price: price});
+        res.send(results);
+    }
+    else if ((date) && (!price)){
+        const results = await Product.find().sort({date: date});
+        res.send(results);}
+}
+
 })
 module.exports = router;
