@@ -53,6 +53,8 @@ router.post('/', [auth, admin], async (req, res) => {
     }
 
 })
+
+
 // deleting a product by an id 
 router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
     const product = await Product.findByIdAndDelete(req.params.id).exec();
@@ -80,4 +82,49 @@ router.put('/', [auth, admin], async (req, res) => {
         res.send(ex);
     }
 })
+
+
+// search functionality
+router.get('/', async (req, res) => {
+    const {search} = req.query;
+    if (search){
+        const products = await Product.find({ name: { $regex: search ,$options: 'i'}});
+        res.send(products);
+    }
+})
+
+
+// Sorting products by category
+router.get('/', async (req, res) => {
+    const {category,price, date } = req.query;
+    if (category)
+    { if ((!date) && price){
+        const results = await Product.find( {category: category}).sort({price: price});
+        res.send(results);
+    }
+    else if ( (date) && (!price)){
+        const results = await Product.find( {category: category}).sort({createdAt: date});
+        res.send(results);
+    }}
+    else{
+         if((!date) && (price)){
+        const results = await Product.find().sort({price: price});
+        res.send(results);
+    }
+    else if ((date) && (!price)){
+        const results = await Product.find().sort({date: date});
+        res.send(results);}
+    else if ((!date) && (!price)){
+    try {
+        const results = await Product.find({});
+        res.send(results);
+    } catch (ex) { res.send(ex); }
+
+    }    
+}
+
+})
+
+
+
 module.exports = router;
