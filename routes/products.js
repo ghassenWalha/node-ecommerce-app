@@ -5,7 +5,7 @@ const auth = require('../middleware/auth') ;
 const admin = require('../middleware/admin') ; 
 
 
-// finding the liste of products by category
+
 router.get('/:category', async (req, res) => {
     const { category } = req.params;
     try {
@@ -85,7 +85,15 @@ router.get('/', async (req, res) => {
     else if ((date) && (!price)){
         const results = await Product.find().sort({date: date});
         res.send(results);}
+    else if ((!date) && (!price)){
+    try {
+        const results = await Product.find({});
+        res.send(results);
+    } catch (ex) { res.send(ex); }
+
+    }    
 }
 
 })
 module.exports = router;
+
