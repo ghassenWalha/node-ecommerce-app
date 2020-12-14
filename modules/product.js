@@ -43,6 +43,6 @@ const productSchema = new mongoose.Schema({
 
 // creating a product model from the schema : the model handles all interaction with the database
 
-const Product= mongoose.model('Product',productSchema) ;
+const Product = mongoose.model('Product', productSchema);
 
-exports.Product=Product ; 
+exports.Product = Product;
