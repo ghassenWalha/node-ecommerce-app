@@ -6,9 +6,10 @@ const admin = require('../middleware/admin');
 
 
 // finding the liste ofproducts by categorie 
-router.get('/:category', async (req, res) => {
+router.get('/bycategory/:category', async (req, res) => {
     const {category} = req.params;
     try {
+           
         const results = await Product.find({"category": category});
         res.send(results);
     } catch (ex) {
@@ -16,17 +17,25 @@ router.get('/:category', async (req, res) => {
     }
 })
 
-//  finding a single product by id 
-router.get('/findone/:id', async (req, res) => {
+router.get('/adminpannel', async (req, res) => {
+ 
+    try {
+                const results = await Product.find({  });
+                console.log("hello2");
+                res.send(results);
+        
+    } catch (ex) { 
+       console.log( ex) ;
+        res.send(ex); }
+})
 
+//  finding a single product by id 
+router.get('/product/:id', async (req, res) => {
     const {id} = req.params;
     try {
         const results = await Product.find({"_id": id});
-
         console.log(results);
-
         res.send(results);
-
     } catch (ex) {
         res.send(ex);
     }
@@ -45,7 +54,7 @@ router.post('/', [auth, admin], async (req, res) => {
 
 })
 // deleting a product by an id 
-router.delete('/:id', [auth, admin], async (req, res) => {
+router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
     const product = await Product.findByIdAndDelete(req.params.id).exec();
     res.send("success");
 })
