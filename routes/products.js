@@ -64,7 +64,7 @@ router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
 //  updating a product 
 router.put('/', /*[auth, admin],*/ async (req, res) => {
     const {name, description, moreInfo, price, category, imgUrls,id} = req.body;
-   
+   console.log("imgUrls: ",imgUrls,"category":category);
     try {
         const filter = {"_id": id};
         console.log(id);
