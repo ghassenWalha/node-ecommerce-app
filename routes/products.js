@@ -62,7 +62,7 @@ router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
 })
 
 //  updating a product 
-router.put('/', [auth, admin], async (req, res) => {
+router.put('/', /*[auth, admin],*/ async (req, res) => {
     const {name, description, moreInfo, price, category, imgUrls} = req.body;
     const id = req.body._id;
     try {
