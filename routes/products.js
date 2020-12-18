@@ -43,8 +43,8 @@ router.get('/product/:id', async (req, res) => {
 
 // creating a new product
 router.post('/', [auth, admin], async (req, res) => {
-    const {name, description, moreInfo, price, category, imgUrls,} = req.body;
-    const product = new Product({name, description, moreInfo, price, category, imgUrls});
+    const {name, description, moreInfo, price, category, imgUrls,color} = req.body;
+    const product = new Product({name, description, moreInfo, price, category, imgUrls,color});
     try {
         const results = await product.save();
         res.send(results);
@@ -63,7 +63,7 @@ router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
 
 //  updating a product 
 router.put('/', /*[auth, admin],*/ async (req, res) => {
-    const {name, description, moreInfo, price, category, imgUrls,id} = req.body;
+    const {name, description, moreInfo, price, category, imgUrls,id,color} = req.body;
    console.log("imgUrls: ",imgUrls,"category",category);
     try {
         const filter = {"_id": id};
@@ -74,7 +74,8 @@ router.put('/', /*[auth, admin],*/ async (req, res) => {
             moreInfo,
             price,
             category,
-            imgUrls
+            imgUrls,
+            color
         };
         let p = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
         res.send(p);
