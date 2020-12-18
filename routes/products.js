@@ -75,8 +75,8 @@ router.put('/', [auth, admin], async (req, res) => {
             category: req.body.category,
             imgUrls: req.body.imgUrls
         };
-        let p = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
-        res.send(p);
+        let product = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
+        res.send(product);
 
     } catch (ex) {
         res.send(ex);
@@ -124,7 +124,5 @@ router.get('/', async (req, res) => {
 }
 
 })
-
-
 
 module.exports = router;

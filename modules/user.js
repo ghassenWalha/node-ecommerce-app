@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema({
         type: [String],
     },
     isAdmin: {
-        type: Boolean
+        type: Boolean,
+        required:true
     }
 });
-
 
 userSchema.methods.generateToken = function () {
     return jwt.sign({_id: this._id, name: this.name, email: this.email, isAdmin: this.isAdmin}, "jwtPrivateKey");
