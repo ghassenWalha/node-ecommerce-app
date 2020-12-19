@@ -43,8 +43,8 @@ router.get('/product/:id', async (req, res) => {
 
 // creating a new product
 router.post('/', [auth, admin], async (req, res) => {
-    const {name, description, moreInfo, price, category, imgUrls,} = req.body;
-    const product = new Product({name, description, moreInfo, price, category, imgUrls});
+    const {name, description, moreInfo, price, category, imgUrls,color} = req.body;
+    const product = new Product({name, description, moreInfo, price, category, imgUrls,color});
     try {
         const results = await product.save();
         res.send(results);
@@ -62,18 +62,20 @@ router.delete('/:id', /*[auth, admin],*/ async (req, res) => {
 })
 
 //  updating a product 
-router.put('/', [auth, admin], async (req, res) => {
-    const {name, description, moreInfo, price, category, imgUrls} = req.body;
-    const id = req.body._id;
+router.put('/', /*[auth, admin],*/ async (req, res) => {
+    const {name, description, moreInfo, price, category, imgUrls,id,color} = req.body;
+   console.log("imgUrls: ",imgUrls,"category",category);
     try {
-        const filter = {"_id": req.body._id};
+        const filter = {"_id": id};
+        console.log(id);
         const update = {
-            name: req.body.name,
-            description: req.body.description,
-            moreInfo: req.body.moreInfo,
-            price: req.body.price,
-            category: req.body.category,
-            imgUrls: req.body.imgUrls
+            name,
+            description,
+            moreInfo,
+            price,
+            category,
+            imgUrls,
+            color
         };
         let product = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
         res.send(product);
@@ -124,5 +126,7 @@ router.get('/', async (req, res) => {
 }
 
 })
+
+
 
 module.exports = router;
