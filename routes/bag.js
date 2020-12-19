@@ -3,7 +3,7 @@ const {User} = require("../modules/user");
 const {Product} = require("../modules/product");
 
 router.get("/", async (req, res) => {
-    const email = "ghassen@yahoo.fr";
+    const email = "benslama@gmail.com";
     /*const {bag} = req.params ;*/
     try {
         var user = await User.findOne({email: email});
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const email = "ghassen@yahoo.fr";
+    const email = "benslama@gmail.com";
     const {id} = req.body;
 
     try {
@@ -58,3 +58,4 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
+

@@ -77,8 +77,8 @@ router.put('/', /*[auth, admin],*/ async (req, res) => {
             imgUrls,
             color
         };
-        let p = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
-        res.send(p);
+        let product = await Product.findByIdAndUpdate(filter, update, {returnOriginal: false})
+        res.send(product);
 
     } catch (ex) {
         res.send(ex);

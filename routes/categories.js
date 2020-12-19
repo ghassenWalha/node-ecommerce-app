@@ -28,6 +28,7 @@ router.get('/',/* auth,*/ async (req, res) => {
     try {
         //find all categries in the database
         const results = await Category.find({});
+        console.log(results) ;
         res.send(results);
     } catch (ex) {
         res.send(ex);
@@ -37,7 +38,6 @@ router.get('/',/* auth,*/ async (req, res) => {
 
 // router.delete('/:id',async (req,res)=>{
 //   const {id} = req.params;
-
 //     try{
 //         const results  = await Category.deleteOne({_id:id});
 //         res.send(results);
