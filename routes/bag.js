@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const {User} = require("../modules/user");
 const {Product} = require("../modules/product");
+const auth = require('../middleware/auth');
 
-router.get("/", async (req, res) => {
-    const email = "benslama@gmail.com";
+router.get("/",auth, async (req, res) => {
+    const email = req.user["email"];
     /*const {bag} = req.params ;*/
     try {
         var user = await User.findOne({email: email});
@@ -17,8 +18,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
-    const email = "benslama@gmail.com";
+router.post("/",auth, async (req, res) => {
+    const email = req.user["email"];
     const {id} = req.body;
 
     try {
@@ -36,8 +37,8 @@ router.post("/", async (req, res) => {
 });
 
 
-router.delete("/:id", async (req, res) => {
-    const email = "ghassen@yahoo.fr";
+router.delete("/:id",auth, async (req, res) => {
+    const email = req.user["email"];
 
     try {
         const {id} = req.params;

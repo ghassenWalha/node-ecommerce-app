@@ -14,7 +14,7 @@ app.use(express.json());
 
 /*'mongodb+srv://flutter-team:flutter-junior@cluster0.o7rlv.mongodb.net/flutter_ecommerce_project' */
 
-mongoose.connect('mongodb+srv://flutter-team:flutter-junior@cluster0.o7rlv.mongodb.net/flutter_ecommerce_project',{ useNewUrlParser: true , useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost/flutter_ecommerce_project',{ useNewUrlParser: true , useUnifiedTopology: true})
     .then(() => console.log("connected to mongodb successfully"))
     .catch((err) => console.log('couldnt connect to mongodb' + err));
 

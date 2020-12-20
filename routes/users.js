@@ -23,7 +23,6 @@ router.post('/', async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         var domain = email.substring(email.lastIndexOf("@") );
         console.log(domain);
-
         const isAdmin=(domain==="@jei-formation-2020.com") ;
         const user = new User({name, hashedPassword, email, bag, favorite, isAdmin});
         // Saving the user in the database
@@ -55,5 +54,40 @@ router.delete('/:id',async (req,res) => {
         res.send(err);
     }
 })
+
+
+
+//  updating a user 
+router.put('/',auth, /* admin],*/ async (req, res) => {
+    try {
+        let olduser = await User.findOne({email: req.user["email"]});
+        if (!olduser) {// checking if the user already exist or not using the old email extracted from the token
+            res.send({"error":"invalid mail or passwordhh"});
+            return null;
+        }else{
+            
+    const {name, email} = req.body;
+    const hashedPassword=olduser.hashedPassword;
+    const bag = olduser.bag ;    
+    const favorite=olduser.favorite;
+    var domain = email.substring(email.lastIndexOf("@") );
+    const isAdmin=(domain==="@jei-formation-2020.com") ;
+    const filter = {"_id": olduser.id};
+       const update = {
+            name,
+            email,
+            hashedPassword,
+            bag,
+            favorite,
+            isAdmin,
+        };
+        console.log(update)
+        let user = await User.findOneAndUpdate(filter, update, {new: true})
+        newtoken = user.generateToken();
+        res.header("x-auth-token", newtoken).send(user);
+    }} catch (ex) {
+        res.send(ex);}
+})
+
 
 module.exports = router;
