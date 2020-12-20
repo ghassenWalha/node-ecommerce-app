@@ -8,10 +8,10 @@ router.get("/",auth, async (req, res) => {
     /*const {bag} = req.params ;*/
     try {
         var user = await User.findOne({email: email});
-
+         console.log(user.bag);
         var resultArray = await Product.find({_id: {$in: user.bag}});
+        
         console.log(resultArray);
-
         res.send(resultArray);
     } catch (ex) {
         res.send(ex);
