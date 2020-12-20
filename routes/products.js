@@ -3,7 +3,7 @@ const {Product} = require('../modules/product');
 const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-
+const joiSchema = require("./schemas/joi_product_schema") ;
 
 // finding the liste ofproducts by categorie 
 router.get('/bycategory/:category', async (req, res) => {
@@ -42,18 +42,20 @@ router.get('/product/:id', async (req, res) => {
 })
 
 // creating a new product
-    router.post('/', [auth, admin], async (req, res) => {
-    const {name, description, moreInfo, price, category, imgsUrl:imgUrls,color} = req.body;
-        console.log(req.body);
+router.post('/', [auth, admin], async (req, res) => {
+    const {name, description, moreInfo, price, category, imgUrls,color} = req.body;
+    const{error}=joiSchema.productSchema.validate({name:name,description:description,moreInfo:moreInfo,price:price,category:category,imgUrls:imgUrls,color:color});  
+
+    if(error){
+        res.send({error:error["message"]}) ; 
+    }else{
     const product = new Product({name, description, moreInfo, price, category, imgUrls,color});
     try {
         const results = await product.save();
         res.send(results);
     } catch (e) {
         res.send(e);
-    }
-
-})
+    } }})
 
 
 // deleting a product by an id 
@@ -86,13 +88,15 @@ router.put('/', /*[auth, admin],*/ async (req, res) => {
     }
 })
 
-
 // search functionality
-router.get('/', async (req, res) => {
+router.get('/search', async (req, res) => {
     const {search} = req.query;
+    console.log(search) ;
     if (search){
         const products = await Product.find({ name: { $regex: search ,$options: 'i'}});
         res.send(products);
+    }else{
+        res.send("no product");
     }
 })
 
