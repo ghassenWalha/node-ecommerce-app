@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
             upload_preset: 'dev_setups',
         });
         console.log(uploadResponse);
-        res.json({ url: uploadResponse.secure_url });
+        res.send( uploadResponse.secure_url);
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
