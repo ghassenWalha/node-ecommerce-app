@@ -90,13 +90,15 @@ router.put('/', /*[auth, admin],*/ async (req, res) => {
     }
 })
 
-
 // search functionality
-router.get('/', async (req, res) => {
+router.get('/search', async (req, res) => {
     const {search} = req.query;
+    console.log(search) ;
     if (search){
         const products = await Product.find({ name: { $regex: search ,$options: 'i'}});
         res.send(products);
+    }else{
+        res.send("no product");
     }
 })
 
