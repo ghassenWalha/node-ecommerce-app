@@ -55,9 +55,7 @@ router.post('/', [auth, admin], async (req, res) => {
         res.send(results);
     } catch (e) {
         res.send(e);
-    }
-
-}})
+    } }})
 
 
 // deleting a product by an id 
