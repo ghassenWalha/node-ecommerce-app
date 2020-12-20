@@ -62,7 +62,7 @@ router.put('/',auth, /* admin],*/ async (req, res) => {
     try {
 
         const {name, email} = req.body;
-        const{error}=joiSchema.SignupSchema.validate({username:name,email:email});
+        const{error}=joiSchema.updateSchema.validate({username:name,email:email});
         if(error){
             res.send({error:error["message"]}) ; 
         }else{ 
