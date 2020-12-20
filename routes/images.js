@@ -5,12 +5,12 @@ const { cloudinary } = require('../utils/cloudinary');
 router.post('/', async (req, res) => {
     try {
         const fileStr = req.body.data;
-        console.log(req.body)
-        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+        var uploadStr = 'data:image/jpeg;base64,' + fileStr;
+        const uploadResponse = await cloudinary.uploader.upload(uploadStr, {
             upload_preset: 'dev_setups',
         });
-        console.log(uploadResponse);
-        res.send( uploadResponse.secure_url);
+        console.log(uploadResponse.secure_url);
+       res.json({ url: uploadResponse.secure_url });
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
