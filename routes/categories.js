@@ -2,6 +2,8 @@ const router = require('express').Router();
 const {Category} = require("../modules/category");
 const auth = require("../middleware/auth");
 const admin = require('../middleware/admin');
+const joiSchema = require("./schemas/joi_category_schemas") ;
+
 // localhost/Category/4 
 
 router.post('/'/*, [auth, admin]*/, async (req, res) => {
@@ -11,7 +13,10 @@ router.post('/'/*, [auth, admin]*/, async (req, res) => {
     //object destructuring to get the attribute from the body object 
 
     const {name, imgUrl} = req.body;
-
+    const{error}=joiSchema.categorySchema.validate({name:name,imgUrl:imgUrl});  
+    if(error){
+        res.send({error:error["message"]}) ; 
+    }else{
     //creating an instance of the Category model
     const category = new Category({name, imgUrl});
     try {
@@ -22,7 +27,7 @@ router.post('/'/*, [auth, admin]*/, async (req, res) => {
     } catch (ex) {
         res.send(ex);
     }
-})
+}})
 
 router.get('/',/* auth,*/ async (req, res) => {
     try {

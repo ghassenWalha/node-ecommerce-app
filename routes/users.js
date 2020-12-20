@@ -4,7 +4,7 @@ const {route} = require('./products');
 const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin")
-const joiSchema = require("./schemas/joi_schema") ;
+const joiSchema = require("./schemas/joi_user_schema") ;
 
 router.post('/', async (req, res) => {
     const {name, email, bag, favorite} = req.body;
@@ -60,16 +60,23 @@ router.delete('/:id',async (req,res) => {
 //  updating a user 
 router.put('/',auth, /* admin],*/ async (req, res) => {
     try {
+
+        const {name, email} = req.body;
+        const{error}=joiSchema.SignupSchema.validate({username:name,email:email});
+        if(error){
+            res.send({error:error["message"]}) ; 
+        }else{ 
+
         let olduser = await User.findOne({email: req.user["email"]});
         if (!olduser) {// checking if the user already exist or not using the old email extracted from the token
-            res.send({"error":"invalid mail or passwordhh"});
+            res.send({"error":"user doesn't existe"});
             return null;
         }else{
-            
-    const {name, email} = req.body;
+    
     const hashedPassword=olduser.hashedPassword;
     const bag = olduser.bag ;    
     const favorite=olduser.favorite;
+    // verifying if the new email is an admin email or not 
     var domain = email.substring(email.lastIndexOf("@") );
     const isAdmin=(domain==="@jei-formation-2020.com") ;
     const filter = {"_id": olduser.id};
@@ -85,7 +92,7 @@ router.put('/',auth, /* admin],*/ async (req, res) => {
         let user = await User.findOneAndUpdate(filter, update, {new: true})
         newtoken = user.generateToken();
         res.header("x-auth-token", newtoken).send(user);
-    }} catch (ex) {
+    }}} catch (ex) {
         res.send(ex);}
 })
 

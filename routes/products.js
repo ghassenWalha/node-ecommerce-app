@@ -3,7 +3,7 @@ const {Product} = require('../modules/product');
 const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-
+const joiSchema = require("./schemas/joi_product_schema") ;
 
 // finding the liste ofproducts by categorie 
 router.get('/bycategory/:category', async (req, res) => {
@@ -44,6 +44,11 @@ router.get('/product/:id', async (req, res) => {
 // creating a new product
 router.post('/', [auth, admin], async (req, res) => {
     const {name, description, moreInfo, price, category, imgUrls,color} = req.body;
+    const{error}=joiSchema.productSchema.validate({name:name,description:description,moreInfo:moreInfo,price:price,category:category,imgUrls:imgUrls,color:color});  
+
+    if(error){
+        res.send({error:error["message"]}) ; 
+    }else{
     const product = new Product({name, description, moreInfo, price, category, imgUrls,color});
     try {
         const results = await product.save();
@@ -52,7 +57,7 @@ router.post('/', [auth, admin], async (req, res) => {
         res.send(e);
     }
 
-})
+}})
 
 
 // deleting a product by an id 
